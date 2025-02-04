@@ -38,7 +38,7 @@ Antes de começar, certifique-se de ter instalado:
 ### **2️⃣ Clone o Repositório**
 
 ```sh
-git clone https://github.com/justAlves/pixelforge-next/tree/master
+git clone https://github.com/justAlves/pixelforge-next.git
 cd pixelforge-next
 ```
 
