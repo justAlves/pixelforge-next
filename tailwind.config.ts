@@ -8,9 +8,17 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)", "sans-serif"],
+        orbitron: ["var(--font-orbitron)", "sans-serif"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "#7D5BA6",
+        secondary: "#121212",
+        highlight: "#FFB400",
+        text: "#f5f5f5"
       },
     },
   },
