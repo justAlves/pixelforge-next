@@ -29,7 +29,7 @@ export default function TitleBar() {
   return (
     <div
       data-tauri-drag-region
-      className="flex items-center justify-center px-4 py-2 w-full bg-background/85 text-white select-none fixed"
+      className="flex items-center justify-center px-4 py-2 w-full bg-background/50 select-none fixed"
     >
       <div className="absolute left-4 flex space-x-2">
         <button
