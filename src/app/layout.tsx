@@ -3,6 +3,7 @@ import { Orbitron, Inter } from "next/font/google";
 import "./globals.css";
 import TitleBar from "@/components/title-bar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/toggle-mode";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' })
@@ -29,7 +30,16 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <TitleBar/>
+            <div
+              className="flex justify-end w-full py-8 lg:py-16 bg-background/90"
+            >
+              <ModeToggle />
+            </div>
             {children}
+            <footer className="w-full h-16 bg-background/90 flex flex-col items-center justify-center">
+              <p className="text-sm font-inter">© 2025 <span className="text-app_primary">Pixel</span>Forge</p>
+              <p className="text-sm font-inter ml-4">Todos os direitos reservados</p>
+            </footer>
           </ThemeProvider>
       </body>
     </html>
