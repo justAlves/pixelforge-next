@@ -3,3 +3,12 @@ export interface UserDTO {
   username: string
   password: string
 }
+
+export interface User {
+  email: string
+  username: string
+  bio?: string
+  image?: string
+  createdAt: string
+  updatedAt: string
+}

@@ -2,7 +2,7 @@ import { verify } from "jsonwebtoken";
 import { AppError } from "./errors";
 
 export function authMiddleware(req: Request) {
-  const token = req.headers.get("authorization")?.replace("Bearer ", "");
+  const token = localStorage.getItem("token");    
 
   if (!token) {
     return new AppError("Token not provided", 401);

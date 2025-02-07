@@ -8,16 +8,24 @@ export const dynamic = "force-static";
 
 export async function GET(req: Request) {
   try {
-    const user = authMiddleware(req);
+    const user = req.headers.get("Authorization");
 
-    if(user instanceof AppError) {
-      return NextResponse.json({ message: user.message }, { status: user.statusCode });
+    console.log(user);
+
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const userById = await UserRepository.getById(user.user.id);
+    const token = user.split(" ")[1];
+    const secret = process.env.JWT_SECRET!;
+
+    const response = verify(token, secret) as { id: string; email: string; username: string };  
+
+    const userById = await UserRepository.getById(response.id);
 
     return NextResponse.json(userById, { status: 200 });
   } catch (error) {
-    
+    console.log(error);
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

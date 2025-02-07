@@ -1,6 +1,7 @@
 import { AppError } from "@/lib/errors";
 import { UserService } from "@/services/user.service";
 import { UserDTO } from "@/types/user";
+import { setCookie } from "cookies-next";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request){
@@ -11,9 +12,9 @@ export async function POST(req: Request){
     const response = NextResponse.json(user, { status: 201 });
 
     response.cookies.set('token', user.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 30 * 24 * 60 * 60,
+      httpOnly: false,
+      secure: false,
+      maxAge: 30 * 24 * 60 * 60, // 30 days
       path: '/'
     })
 

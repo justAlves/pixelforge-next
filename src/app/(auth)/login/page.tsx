@@ -5,19 +5,39 @@ import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { LoginData, loginSchema } from '@/schemas/login';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import axios from 'axios';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import userStore from '@/stores/user.store';
 
 export default function Login() {
+  const { push } = useRouter()
+  const { setUser } = userStore()
   const { register, handleSubmit, formState: { errors} } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = (data: LoginData) => {
-    console.log(data)
+  const onSubmit = async (data: LoginData) => {
+    try {
+      const response = await axios.post('/api/auth', {
+        emailOrUsername: data.email,
+        password: data.password
+      })
+
+      toast.success('Login efetuado com sucesso!')
+      setUser(response.data.user)
+      localStorage.setItem('token', response.data.token)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+      push('/app/feed')
+    } catch (error) {
+      toast.error('Usuário ou senha incorretos')
+    }
   }
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-full h-[95vh] bg-background/90"
+      className="flex flex-col items-center pt-32 w-full h-screen bg-background/90"
     >
       <h1
         className="text-4xl font-bold font-orbitron"
@@ -67,8 +87,13 @@ export default function Login() {
         <Button
           variant="link"
           type='button'
+          asChild
         >
-          Não tem uma conta? Cadastre-se agora mesmo!
+          <Link
+            href={'/register'}
+          >
+            Não tem uma conta? <span className="text-app_primary">Crie uma agora!</span>
+          </Link>
         </Button>
       </form>
     </div>
